@@ -1,15 +1,26 @@
-const { route } = require("../routes/tasks");
+const Task = require("../models/task");
+// const { route } = require("../routes/tasks");
 
-const getAllTasks = (req, res) => {
-  res.send("All tasks are here");
+const getAllTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({});
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const createTask = (req, res) => {
-  res.send("create task");
+const createTask = async (req, res) => {
+  try {
+    const task = await Task.create(req.body);
+    res.status(201).json({ task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 const getTask = (req, res) => {
-  res.send("get single task");
+  res.json({ id: req.params.id });
 };
 
 const updateTask = (req, res) => {
